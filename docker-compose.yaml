@@ -1,0 +1,18 @@
+services:
+  customers:
+    image: bulzanstefan/customers:1
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongoadmin:secret@mongodb:27017/customers-db?authSource=admin
+    container_name: customers
+    depends_on:
+      - mongodb
+  mongodb:
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongoadmin
+      MONGO_INITDB_ROOT_PASSWORD: secret
+    volumes:
+      - /tmp/mongodata:/data/db
+    container_name: mongodb
